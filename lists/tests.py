@@ -5,8 +5,6 @@ from django.http import HttpRequest
 
 from lists.views import home_page
 
-
-
 class HomePageTest(TestCase):
 
     def test_root_url_resolves_to_homepage_view(self):
