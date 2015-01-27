@@ -23,6 +23,8 @@ class NewVisitorTest(unittest.TestCase):
         self.browser.get('http://localhost:8000')
 
         # They notice the title of the webpage mentions to-do lists
+        # import time
+        # time.sleep(5)
         self.assertIn('To-Do', self.browser.title)
 
         # She is invited to enter a to-do item straight away
