@@ -32,22 +32,32 @@ class NewVisitorTest(unittest.TestCase):
         # When she hits enter, the page updates, and now the page lists
         # "1. Buy peacock feathers" as an item on the to-do list
         inputbox.send_keys(Keys.ENTER)
-
+        #
+        # import time
+        # time.sleep(10)
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertTrue(
-            any(row.text == '1. Buy peacock feathers' for row in rows),
-            "New to-do item did not appear in table"
-        )
+
+        self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
 
         # There is still a textbox inviting the user to add another item. They enter
-        # "use peacock feathers to make a fly"
-        self.fail('Finish the test')
+        # "Use peacock feathers to make a fly"
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('Use peacock feathers to make a fly')
+        inputbox.send_keys(Keys.ENTER)
 
         # The page updates and now both items show in the to-do list
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
 
+        self.assertIn(
+            '1: Buy peacock feathers', [row.text for row in rows]
+        )
+        self.assertIn(
+            '2: Use peacock feathers to make a fly', [row.text for row in rows]
+        )
         # The user wonders if it will save their list, it tells the user that a unique url has been created for them
-
+        self.fail('Finish the test!')
         # The user visits that url - the to-do list is still there
 
         # Satisfied, the user closes the webpage
