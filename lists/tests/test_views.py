@@ -3,6 +3,8 @@ from django.test import TestCase
 from django.template.loader import render_to_string
 from django.http import HttpRequest
 
+from unittest import skip
+
 from lists.models import Item, List
 from lists.views import home_page
 from lists.forms import ItemForm, EMPTY_LIST_ERROR
@@ -99,8 +101,8 @@ class ListViewTest(TestCase):
         response = self.post_invalid_input()
         self.assertContains(response, EMPTY_LIST_ERROR)
 
+    @skip
     def test_duplicate_item_validation_errors_end_up_on_lists_page(self):
-        @skip
         list1 = List.objects.create()
         item1 = Item.objects.create(list=list1, text='textey')
         response = self.client.post('/lists/{0}'.format(list1.id),
