@@ -1,5 +1,5 @@
 from django.test import TestCase
-from lists.forms import ItemForm, ExistingListItemForm, EMPTY_LIST_ERROR, DUPLICATE_ITEM_FORM
+from lists.forms import ItemForm, ExistingListItemForm, EMPTY_LIST_ERROR, DUPLICATE_ITEM_ERROR
 from lists.models import List, Item
 
 
@@ -48,4 +48,10 @@ class ExistingListItemFormTest(TestCase):
         Item.objects.create(list=list_, text='no twins!')
         form = ExistingListItemForm(for_list=list_, data={'text': 'no twins!'})
         self.assertFalse(form.is_valid())
-        self.assertEqual(form.errors['text'], [DUPLICATE_ITEM_FORM], msg=form.errors['text'])
+        self.assertEqual(form.errors['text'], [DUPLICATE_ITEM_ERROR], msg=form.errors['text'])
+
+    def test_form_save(self):
+        list_ = List.objects.create()
+        form = ExistingListItemForm(for_list=list_, data={'text': 'hi'})
+        new_item = form.save()
+        self.assertEqual(new_item, Item.objects.all()[0])

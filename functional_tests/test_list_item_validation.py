@@ -1,5 +1,6 @@
 from .base import FunctionalTest
 from unittest import skip
+from lists.forms import DUPLICATE_ITEM_ERROR
 
 
 class ItemValidationTest(FunctionalTest):
@@ -37,12 +38,13 @@ class ItemValidationTest(FunctionalTest):
 
         # User goes to the page and stars a new list
         self.browser.get(self.server_url)
-        self.get_item_input_box().send_keys('Buy wellies\n')
+        self.get_item_input_box().send_keys('Buy wellies')
+        self.get_item_input_box().send_keys('\n')
         self.check_for_row_in_list_table('1: Buy wellies')
 
         # The user accidentally tries to enter a duplicate item
         self.get_item_input_box().send_keys('Buy wellies\n')
         error = self.browser.find_element_by_css_selector('.has-error')
-        self.assertEqual(error, 'You have already got this in your list')
+        self.assertEqual(error.text, DUPLICATE_ITEM_ERROR)
 
         # The user receives a helpful message that informs them
