@@ -86,4 +86,4 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, '../static'))
 
 # django-nose
-#TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
